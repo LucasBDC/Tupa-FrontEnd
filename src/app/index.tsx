@@ -1,95 +1,86 @@
-import { Link } from "expo-router";
-import React from "react";
-import { Text, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Link, router, useRouter } from "expo-router"
+import React, { useState } from "react"
+import { Text, View, TouchableOpacity, TextInput, Image } from "react-native"
 
 export default function Page() {
-  return (
-    <View className="flex flex-1">
-      <Header />
-      <Content />
-      <Footer />
-    </View>
-  );
-}
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const router = useRouter()
 
-function Content() {
+  const handleLogin = async () => {
+    const res = await fetch("http://127.0.0.1:8000/user/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
+    })
+    if (res.ok) {
+      alert("Login efetuado com sucesso!")
+      router.push("/dashboard")
+    } else {
+      const errorData = await res.json()
+      alert(password + " " + email)
+      alert(`Erro ao efetuar login: ${errorData.detail}`)
+    }
+  }
   return (
-    <View className="flex-1">
-      <View className="py-12 md:py-24 lg:py-32 xl:py-48">
-        <View className="px-4 md:px-6">
-          <View className="flex flex-col items-center gap-4 text-center">
-            <Text
-              role="heading"
-              className="text-3xl text-center native:text-5xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl"
-            >
-              Welcome to Project ACME
-            </Text>
-            <Text className="mx-auto max-w-[700px] text-lg text-center text-gray-500 md:text-xl dark:text-gray-400">
-              Discover and collaborate on amce. Explore our services now.
-            </Text>
-
-            <View className="gap-4">
-              <Link
-                suppressHighlighting
-                className="flex h-9 items-center justify-center overflow-hidden rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-gray-50 web:shadow ios:shadow transition-colors hover:bg-gray-900/90 active:bg-gray-400/90 web:focus-visible:outline-none web:focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300"
-                href="/"
-              >
-                Explore
-              </Link>
-            </View>
-          </View>
+    <View className="flex flex-1 items-center justify-center">
+      <View className="flex items-center justify-center">
+        <Image source={require("assets/image.png")} />
+        <View className="-top-10 flex justify-center items-center">
+          <Text className="text-8xl font-black z-10 text-[#4ECB71]">Tupã.</Text>
+          <Text className="text-lg -top-4 z-0">Bem vindo de volta!</Text>
         </View>
       </View>
-    </View>
-  );
-}
-
-function Header() {
-  const { top } = useSafeAreaInsets();
-  return (
-    <View style={{ paddingTop: top }}>
-      <View className="px-4 lg:px-6 h-14 flex items-center flex-row justify-between ">
-        <Link className="font-bold flex-1 items-center justify-center" href="/">
-          ACME
-        </Link>
-        <View className="flex flex-row gap-4 sm:gap-6">
-          <Link
-            className="text-md font-medium hover:underline web:underline-offset-4"
-            href="/"
-          >
-            About
-          </Link>
-          <Link
-            className="text-md font-medium hover:underline web:underline-offset-4"
-            href="/"
-          >
-            Product
-          </Link>
-          <Link
-            className="text-md font-medium hover:underline web:underline-offset-4"
-            href="/"
-          >
-            Pricing
-          </Link>
+      <View className="w-full flex gap-5">
+        <View className="w-full flex items-center">
+          <Image
+            source={require("assets/email.png")}
+            className="absolute top-5 z-20 left-24"
+          />
+          <TextInput
+            placeholder="E-mail"
+            placeholderTextColor={"#2C9E4C"}
+            className="bg-[#D9D9D9] border-2 rounded-lg border-[#4ECB71] w-2/3 text-[#2C9E4C] h-16 shadow-md p-4 font-medium z-10 pl-12"
+            value={email}
+            onChange={(e) => setEmail(e.nativeEvent.text)}
+            keyboardType="email-address"
+            autoCapitalize="none"
+          />
+        </View>
+        <View className="w-full flex items-center">
+          <Image
+            source={require("assets/senha.png")}
+            className="absolute top-5 z-20 left-24"
+          />
+          <TextInput
+            placeholder="Senha"
+            placeholderTextColor={"#2C9E4C"}
+            className="bg-[#D9D9D9] border-2 rounded-lg border-[#4ECB71] w-2/3 text-[#2C9E4C] h-16 shadow-md p-4 font-medium z-10 pl-12"
+            value={password}
+            onChange={(e) => setPassword(e.nativeEvent.text)}
+            secureTextEntry={true}
+          />
         </View>
       </View>
-    </View>
-  );
-}
-
-function Footer() {
-  const { bottom } = useSafeAreaInsets();
-  return (
-    <View
-      className="flex shrink-0 bg-gray-100 native:hidden"
-      style={{ paddingBottom: bottom }}
-    >
-      <View className="py-6 flex-1 items-start px-4 md:px-6 ">
-        <Text className={"text-center text-gray-700"}>
-          © {new Date().getFullYear()} Me
+      <View className="w-2/3">
+        <Text className="my-3 self-end text-[#34944F]">
+          Esqueci minha senha!
         </Text>
       </View>
+      <TouchableOpacity
+        className="w-2/3 bg-[#4ECB71] h-16 rounded-full shadow-md flex items-center justify-center mt-10"
+        onPress={handleLogin}
+      >
+        <Text className="text-white text-xl font-semibold">Entrar</Text>
+      </TouchableOpacity>
+      <Text className="mt-2 ">
+        Ainda não tem conta? <Text className="text-[#34944F]">Crie Aqui!</Text>
+      </Text>
     </View>
-  );
+  )
 }
