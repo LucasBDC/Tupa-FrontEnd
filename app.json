@@ -16,6 +16,20 @@
       ]
     ],
     "name": "tupa-frontend",
-    "slug": "tupa-frontend"
+    "slug": "tupa-frontend",
+    "extra": {
+      "router": {
+        "origin": "https://n"
+      },
+      "eas": {
+        "projectId": "27ab9eae-e925-4184-94d6-81d2c039408c"
+      }
+    },
+    "android": {
+      "package": "com.cobbe.tupafrontend"
+    },
+    "ios": {
+      "bundleIdentifier": "com.cobbe.tupafrontend"
+    }
   }
 }

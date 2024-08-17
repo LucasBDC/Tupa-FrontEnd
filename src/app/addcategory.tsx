@@ -19,19 +19,22 @@ export default function AddCatefory({}: Props) {
   const router = useRouter()
 
   const handleCreateCategory = async () => {
-    const res = await fetch("http://127.0.0.1:8000/categories/categories", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${await AsyncStorage.getItem("access_token")}`,
-      },
-      body: JSON.stringify({
-        icon: emoji,
-        name: name,
-        budget: budget,
-        display_type: displayType,
-      }),
-    })
+    const res = await fetch(
+      "https://tupa-backend.onrender.com/categories/categories",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${await AsyncStorage.getItem("access_token")}`,
+        },
+        body: JSON.stringify({
+          icon: emoji,
+          name: name,
+          budget: budget,
+          display_type: displayType,
+        }),
+      }
+    )
     if (res.ok) {
       alert("Categoria adicionada com sucesso!")
       router.push("/categories")

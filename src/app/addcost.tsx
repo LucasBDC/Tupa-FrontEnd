@@ -31,18 +31,23 @@ export default function AddCost() {
 
   const handleCreateExpense = async () => {
     try {
-      const res = await fetch("http://127.0.0.1:8000/user/expense", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${await AsyncStorage.getItem("access_token")}`,
-        },
-        body: JSON.stringify({
-          category_id: selectedCategoryID,
-          amount: amount,
-          category_amount: availableAmount,
-        }),
-      })
+      const res = await fetch(
+        "https://tupa-backend.onrender.com/user/expense",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${await AsyncStorage.getItem(
+              "access_token"
+            )}`,
+          },
+          body: JSON.stringify({
+            category_id: selectedCategoryID,
+            amount: amount,
+            category_amount: availableAmount,
+          }),
+        }
+      )
       if (res.ok) {
         const data = await res.json()
         router.push("/dashboard")
@@ -55,15 +60,18 @@ export default function AddCost() {
   useEffect(() => {
     const getCategories = async () => {
       try {
-        const res = await fetch("http://127.0.0.1:8000/user/categories", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${await AsyncStorage.getItem(
-              "access_token"
-            )}`,
-          },
-        })
+        const res = await fetch(
+          "https://tupa-backend.onrender.com/user/categories",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${await AsyncStorage.getItem(
+                "access_token"
+              )}`,
+            },
+          }
+        )
         if (res.ok) {
           const data = await res.json()
           setCategories(data)

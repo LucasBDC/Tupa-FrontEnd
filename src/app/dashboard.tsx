@@ -13,15 +13,18 @@ export default function Dashboard() {
   useEffect(() => {
     const getCategories = async () => {
       try {
-        const res = await fetch("http://127.0.0.1:8000/user/categories", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${await AsyncStorage.getItem(
-              "access_token"
-            )}`,
-          },
-        })
+        const res = await fetch(
+          "https://tupa-backend.onrender.com/user/categories",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${await AsyncStorage.getItem(
+                "access_token"
+              )}`,
+            },
+          }
+        )
         if (res.ok) {
           const data = await res.json()
           setCategories(data)
@@ -32,6 +35,14 @@ export default function Dashboard() {
     }
     getCategories()
   }, [])
+
+  const weeklyCategories = categories.filter(
+    (category: any) => category.display_type === "weekly"
+  )
+  const monthlyCategories = categories.filter(
+    (category: any) => category.display_type === "monthly"
+  )
+
   return (
     <View className="flex flex-1">
       <Header />
@@ -47,17 +58,45 @@ export default function Dashboard() {
             <Text className="text-lg">Total:</Text>
           </View>
         </View>
-        <View className="flex flex-col gap-8">
-          {categories.map((category: any) => (
-            <CategoryDashStatus
-              key={category.id}
-              name={category.name}
-              icon={category.icon}
-              current_budget={category.current_budget}
-              budget={category.budget}
-            />
-          ))}
+
+        {/* Weekly Categories */}
+        <View className="w-full">
+          <Text className="text-xl font-semibold text-black/60">Semanal:</Text>
+          <View className="flex flex-col gap-8">
+            {weeklyCategories.map((category: any) => (
+              <CategoryDashStatus
+                key={category.id}
+                name={category.name}
+                icon={category.icon}
+                current_budget={category.current_budget}
+                budget={category.budget}
+              />
+            ))}
+          </View>
         </View>
+        <View className="w-full border-b-2  border-black/20 mt-5"></View>
+        {/* Monthly Categories */}
+        <View className="w-full mt-5">
+          <Text className="text-xl font-semibold text-black/60">Mensal:</Text>
+          <View className="flex flex-col gap-8">
+            {monthlyCategories.map((category: any) => (
+              <CategoryDashStatus
+                key={category.id}
+                name={category.name}
+                icon={category.icon}
+                current_budget={category.current_budget}
+                budget={category.budget}
+              />
+            ))}
+          </View>
+        </View>
+        <Link href="/addcategory" asChild>
+          <TouchableOpacity className=" border-2 border-dashed flex justify-center items-center w-full rounded-lg mt-10 border-black/60">
+            <Text className="t p-3 text-black/60 font-medium">
+              Adicionar Categoria
+            </Text>
+          </TouchableOpacity>
+        </Link>
       </View>
       <Link href="/addcost" asChild>
         <TouchableOpacity className="absolute bottom-32 right-10 w-16 h-16 bg-green-500 flex items-center justify-center rounded-full">

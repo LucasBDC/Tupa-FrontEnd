@@ -8,17 +8,20 @@ export default function Page() {
   const router = useRouter()
   useEffect(() => {
     const checkToken = async () => {
-      // AsyncStorage.removeItem("access_token")
+      AsyncStorage.removeItem("access_token")
       try {
-        const res = await fetch("http://127.0.0.1:8000/auth/authenticate", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${await AsyncStorage.getItem(
-              "access_token"
-            )}`,
-          },
-        })
+        const res = await fetch(
+          "https://tupa-backend.onrender.com/auth/authenticate",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${await AsyncStorage.getItem(
+                "access_token"
+              )}`,
+            },
+          }
+        )
         if (res.ok) {
           router.push("/dashboard")
         }
@@ -32,7 +35,7 @@ export default function Page() {
     const form_data = new FormData()
     form_data.append("username", email)
     form_data.append("password", password)
-    const res = await fetch("http://127.0.0.1:8000/auth/token", {
+    const res = await fetch("https://tupa-backend.onrender.com/auth/token", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -45,12 +48,10 @@ export default function Page() {
     if (res.ok) {
       alert("Login efetuado com sucesso!")
       const data = await res.json()
-      alert(JSON.stringify(data))
       await AsyncStorage.setItem("access_token", data.access_token)
       router.push("/dashboard")
     } else {
       const errorData = await res.json()
-      alert(password + " " + email)
       alert(`Erro ao efetuar login: ${errorData.detail}`)
     }
   }

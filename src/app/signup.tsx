@@ -10,7 +10,7 @@ export default function Page() {
   const router = useRouter()
 
   const handleSignup = async () => {
-    const res = await fetch("http://127.0.0.1:8000/user/", {
+    const res = await fetch("https://tupa-backend.onrender.com/user/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
