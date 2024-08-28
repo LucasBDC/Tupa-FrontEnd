@@ -2,7 +2,7 @@
   "expo": {
     "scheme": "acme",
     "userInterfaceStyle": "automatic",
-    "orientation": "default",
+    "orientation": "portrait",
     "web": {
       "output": "static",
       "bundler": "metro"
@@ -15,8 +15,14 @@
         }
       ]
     ],
-    "name": "tupa-frontend",
+    "name": "tupa",
     "slug": "tupa-frontend",
+    "splash": {
+      "image": "./assets/splash.png",
+      "backgroundColor": "#ffffff",
+      "resizeMode": "cover"
+    },
+    "icon" : "./assets/icon.png",
     "extra": {
       "router": {
         "origin": "https://n"
@@ -26,10 +32,23 @@
       }
     },
     "android": {
-      "package": "com.cobbe.tupafrontend"
+      "package": "com.cobbe.tupafrontend",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#FFFFFF"
+      }
     },
     "ios": {
-      "bundleIdentifier": "com.cobbe.tupafrontend"
+      "bundleIdentifier": "com.cobbe.tupafrontend",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#FFFFFF",
+        "resizeMode": "cover"
+      }
+    },
+    "runtimeVersion": "1.0.0",
+    "updates": {
+      "url": "https://u.expo.dev/27ab9eae-e925-4184-94d6-81d2c039408c"
     }
   }
 }
