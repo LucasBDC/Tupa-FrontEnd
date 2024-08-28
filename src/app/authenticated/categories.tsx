@@ -112,14 +112,17 @@ export default function Categories() {
                 X
               </Text>
             </TouchableOpacity>
-            <Text className="text-2xl font-black self-start">
-              {selectedCategory.icon} {selectedCategory.name}{" "}
-              {selectedCategory.id}
+            <Text className="text-lg font-semibold self-start mb-5">
+              {selectedCategory.icon} {selectedCategory.name}
             </Text>
-            <Text className="text-2xl font-black self-start"></Text>
-            <TouchableOpacity className="w-full items-center justify-center bg-blue-500 h-14 rounded-md">
-              <Text className="text-white">Editar Categoria</Text>
-            </TouchableOpacity>
+            <Link
+              href={`/authenticated/editcategory/${selectedCategory.id}`}
+              asChild
+            >
+              <TouchableOpacity className="w-full items-center justify-center bg-blue-500 h-14 rounded-md">
+                <Text className="text-white">Editar Categoria</Text>
+              </TouchableOpacity>
+            </Link>
             <TouchableOpacity
               className="w-full items-center justify-center bg-red-500 h-14 rounded-md mt-2"
               onPress={() => setIsConfirmVisible(true)}
