@@ -45,6 +45,7 @@ const PurchaseHistory = () => {
               date={purchase.date}
               amount={purchase.price}
               category={purchase.category}
+              description={purchase.description}
             />
           ))}
       </ScrollView>

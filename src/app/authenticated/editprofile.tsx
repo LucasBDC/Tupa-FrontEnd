@@ -29,15 +29,18 @@ export default function Page() {
         "A senha não será automáticamente colocada no campo de senha por motivos de sua segurança."
       )
       try {
-        const res = await fetch("http://127.0.0.1:8000/user/me", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${await AsyncStorage.getItem(
-              "access_token"
-            )}`,
-          },
-        })
+        const res = await fetch(
+          "https://interim-ginni-cobbe-6d5420d0.koyeb.app/user/me",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${await AsyncStorage.getItem(
+                "access_token"
+              )}`,
+            },
+          }
+        )
         if (res.ok) {
           const data = await res.json()
           setUser(data)

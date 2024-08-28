@@ -28,20 +28,23 @@ export default function EditCategory() {
   const { id } = useLocalSearchParams()
 
   const handleUpdateCategory = async () => {
-    const res = await fetch("http://127.0.0.1:8000/categories/edit", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${await AsyncStorage.getItem("access_token")}`,
-      },
-      body: JSON.stringify({
-        id: id,
-        icon: emoji,
-        name: name,
-        budget: budget,
-        display_type: displayType,
-      }),
-    })
+    const res = await fetch(
+      "https://interim-ginni-cobbe-6d5420d0.koyeb.app/categories/edit",
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${await AsyncStorage.getItem("access_token")}`,
+        },
+        body: JSON.stringify({
+          id: id,
+          icon: emoji,
+          name: name,
+          budget: budget,
+          display_type: displayType,
+        }),
+      }
+    )
     if (res.ok) {
       alert("Categoria atualizada com sucesso!")
       router.push("/authenticated/categories")
@@ -54,15 +57,18 @@ export default function EditCategory() {
   useEffect(() => {
     const fetchCategory = async () => {
       try {
-        const res = await fetch(`http://127.0.0.1:8000/categories/${id}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${await AsyncStorage.getItem(
-              "access_token"
-            )}`,
-          },
-        })
+        const res = await fetch(
+          `https://interim-ginni-cobbe-6d5420d0.koyeb.app/categories/${id}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${await AsyncStorage.getItem(
+                "access_token"
+              )}`,
+            },
+          }
+        )
         if (res.ok) {
           const data = await res.json()
           setEmoji(data.icon)

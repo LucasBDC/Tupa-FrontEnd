@@ -61,7 +61,7 @@ export default function AddCost() {
           body: JSON.stringify({
             category_id: selectedCategoryID,
             price: amount,
-            description: "",
+            description: description,
             date: "",
           }),
         }
