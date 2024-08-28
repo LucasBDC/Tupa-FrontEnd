@@ -35,7 +35,7 @@ export default function PurchaseCard(props: Props) {
           <Text className="text-xl font-semibold">{formattedValue}</Text>
           <Text>{props.category}</Text>
         </View>
-        <Text className="font-semibold">{props.date}</Text>
+        <Text className="font-semibold">{formattedDate}</Text>
 
         <Modal
           visible={showModal}
