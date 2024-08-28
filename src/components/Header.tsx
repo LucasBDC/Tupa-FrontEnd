@@ -17,6 +17,7 @@ export const Header = () => {
   const [user, setUser] = useState<any>([])
   const [modalVisible, setModalVisible] = useState(false)
   const [logoutVisible, setLogoutVisible] = useState(false)
+  const [optionsVisible, setOptionsVisible] = useState(false)
   const [newBudget, setNewBudget] = useState(0.0)
   const [shownBudget, setShownBudget] = useState(0.0)
   const router = useRouter()
@@ -78,7 +79,7 @@ export const Header = () => {
         <TouchableOpacity
           className="flex flex-row items-center"
           onPress={() => {
-            setLogoutVisible(true)
+            setOptionsVisible(true)
           }}
         >
           <Image source={require("assets/image.png")} className="w-14 h-14" />
@@ -98,6 +99,58 @@ export const Header = () => {
           </Text>
         </TouchableOpacity>
       </View>
+      <Modal
+        visible={optionsVisible}
+        transparent={true}
+        onRequestClose={() => setOptionsVisible(false)}
+        animationType="fade"
+      >
+        <View className="flex-1 justify-center items-center bg-black/60 ">
+          <View className="bg-white p-5 rounded-lg w-full absolute top-0 py-10 pt-32">
+            <View className="flex flex-row items-center justify-between">
+              <Link href={"/authenticated/dashboard"} asChild>
+                <TouchableOpacity
+                  className="flex flex-row items-center"
+                  onPress={() => setOptionsVisible(false)}
+                >
+                  <Image
+                    source={require("assets/image.png")}
+                    className="w-14 h-14"
+                  />
+                  <Text className="text-xl font-black z-10 text-[#4ECB71]">
+                    Tupã.
+                  </Text>
+                </TouchableOpacity>
+              </Link>
+              <TouchableOpacity onPress={() => setOptionsVisible(false)}>
+                <Text className="self-end text-red-500 font-semibold text-2xl">
+                  X
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <View className="flex justify-around mt-5">
+              <Link href="/authenticated/editprofile" asChild>
+                <TouchableOpacity
+                  className="p-3 rounded-lg bg-slate-600 mb-2"
+                  onPress={() => setOptionsVisible(false)}
+                >
+                  <Text className="text-lg text-white">Editar Perfil</Text>
+                </TouchableOpacity>
+              </Link>
+              <View className="w-full border-b"></View>
+              <TouchableOpacity
+                className="p-3 rounded-lg bg-red-500 mt-2"
+                onPress={() => {
+                  setOptionsVisible(false)
+                  setLogoutVisible(true)
+                }}
+              >
+                <Text className="text-lg text-white">Sair da conta</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
       <Modal
         visible={logoutVisible}
         animationType="fade"
